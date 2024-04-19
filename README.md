@@ -1,5 +1,8 @@
 # Wingfuzz Detected Bugs
 
+We propose WingFuzz which implements continuous fuzzing for DBMSs. It utilizes specification-based mutator construction, corpus-driven evolving code fuzzing, and noise-resilient anomaly assessment to address the obstacles. 
+First, the framework automatically generates a unique query parser for each DBMS by following the DBMS grammar specifications. It then performs long-term concurrent fuzzing, using generated test cases for commit fuzzing and integrating fixed anomalies into regression tests. The framework also monitors and isolates anomaly threads to capture detailed data. Identified anomalies are de-duplicated and reported to developers for quick resolution, improving the system's robustness.
+
 WingFuzz has reported 236 bugs in total on the tested DBMSs, including ClickHouse, DamengDB, MariaDB, MonetDB, MySQL, PostgreSQL, PolarDB, SQLite, TDengine, TenDB, VastBase-G100, and YashanDB.
 
 ## Bugs in Database Component
@@ -42,6 +45,55 @@ We have detailed information about the bugs we detected. For bugs reported throu
 | ClickHouse | -              | SEGV                  |
 | ClickHouse | -              | SEGV                  |
 | ClickHouse | -              | SEGV                  |
+| ClickHouse | -              | SEGV                  |
+| ClickHouse | -              | SEGV                  |
+| ClickHouse | -              | SEGV                  |
+| ClickHouse | -              | SEGV                  |
+| ClickHouse | -              | SEGV                  |
+| ClickHouse | -              | SEGV                  |
+| ClickHouse | -              | SEGV                  |
+| ClickHouse | -              | SEGV                  |
+| ClickHouse | -              | SEGV                  |
+| ClickHouse | -              | SEGV                  |
+| ClickHouse | -              | SEGV                  |
+| ClickHouse | -              | SEGV                  |
+| ClickHouse | -              | Memory Safety         |
+| ClickHouse | -              | SIGABRT               |
+| ClickHouse | -              | SIGABRT               |
+| ClickHouse | -              | SIGABRT               |
+| ClickHouse | -              | SIGABRT               |
+| DamengDB   | -              | SEGV                  |
+| DamengDB   | -              | SEGV                  |
+| DamengDB   | -              | SEGV                  |
+| DamengDB   | -              | SEGV                  |
+| DamengDB   | -              | SEGV                  |
+| DamengDB   | -              | SEGV                  |
+| DamengDB   | -              | SEGV                  |
+| DamengDB   | -              | SEGV                  |
+| DamengDB   | -              | SEGV                  |
+| DamengDB   | -              | SEGV                  |
+| DamengDB   | -              | SEGV                  |
+| DamengDB   | -              | SEGV                  |
+| DamengDB   | -              | SEGV                  |
+| DamengDB   | -              | SEGV                  |
+| DamengDB   | -              | SEGV                  |
+| DamengDB   | -              | SEGV                  |
+| DamengDB   | -              | SEGV                  |
+| DamengDB   | -              | Assertion Failure     |
+| DamengDB   | -              | Assertion Failure     |
+| DamengDB   | -              | Assertion Failure     |
+| DamengDB   | -              | Assertion Failure     |
+| DamengDB   | -              | SIGFPE                |
+| DamengDB   | -              | SIGFPE                |
+| DamengDB   | -              | SIGFPE                |
+| DamengDB   | -              | SIGFPE                |
+| DamengDB   | -              | SIGFPE                |
+| DamengDB   | -              | SIGFPE                |
+| DamengDB   | -              | SIGFPE                |
+| DamengDB   | -              | SIGFPE                |
+| DamengDB   | -              | SIGFPE                |
+| DamengDB   | -              | SIGFPE                |
+| DamengDB   | -              | SIGFPE                |
 | MariaDB    | CVE-2022-32091 | Use After Poison      |
 | MariaDB    | CVE-2022-32089 | SEGV                  |
 | MariaDB    | CVE-2022-32088 | SEGV                  |
@@ -90,4 +142,16 @@ We have detailed information about the bugs we detected. For bugs reported throu
 | Tdengine   | -              | Assertion Failure     |
 | Tdengine   | -              | Buffer Overflow       |
 | Tdengine   | -              | Crash                 |
+| Tdengine   | -              | SIGABRT               |
+| Tdengine   | -              | SIGABRT               |
+| Tdengine   | -              | SIGABRT               |
+| Tdengine   | -              | SIGABRT               |
+| Tdengine   | -              | SEGV                  |
+| Tdengine   | -              | SEGV                  |
+| Tdengine   | -              | SEGV                  |
+| Tdengine   | -              | SEGV                  |
+| Tdengine   | -              | SEGV                  |
+| Tdengine   | -              | SEGV                  |
+| Tdengine   | -              | SEGV                  |
+
 
