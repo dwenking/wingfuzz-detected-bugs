@@ -29,7 +29,7 @@ We classify the bugs based on the root cause component. As the table below shows
 
 We have detailed information about the bugs we detected. For bugs reported through the bug tracking system, we have retained the IDs, but for some databases, such as TenDB, PolarDB, VastBase-G100, and YashanDB, we reported via email, therefore they lack IDs. 
 
-Up to our submission, we have detected the following 236 bugs.
+Before our submission, we have detected the following 236 bugs.
 
 | Database   | ID             | Bug Type              |
 |------------|----------------|-----------------------|
