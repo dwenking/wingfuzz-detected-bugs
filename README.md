@@ -156,7 +156,7 @@ Up to our submission, we have detected the following 236 bugs.
 | TDengine   | -              | SEGV                  |
 | TDengine   | -              | SEGV                  |
 
-Up to now, more new bugs have been found.
+Furthermore, WingFuzz has been integrated into detecting more bugs across more databases, identifying over 500 bugs. In the next version, we will add more features and enhancements.
 
 ## Case Study of Selected Bugs
 
