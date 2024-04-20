@@ -130,7 +130,7 @@ d = (int *) GDKmalloc(sz);
 
 ---
 
-Second, more case studies can be referred to links in the following table. Note that while we have detected numerous bugs in industrial databases, they keep their bug information private. Therefore, we are only able to present a selection of bugs from open-source databases that have publicly accessible information.
+Second, more case studies can be referred to links in the following table. Note that while we have detected numerous bugs in industrial databases (236 until submission, and **xxx(TODO)** after submission), they keep their bug information private. Therefore, we are only able to present a selection of bugs from open-source databases that have publicly accessible information.
 
 | Database   | ID                                              | Bug Type               |
 |------------|-------------------------------------------------|------------------------|
