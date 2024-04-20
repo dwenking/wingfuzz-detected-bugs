@@ -3,11 +3,13 @@
 We propose WingFuzz which implements continuous fuzzing for DBMSs. It utilizes specification-based mutator construction, corpus-driven evolving code fuzzing, and noise-resilient anomaly assessment to address the obstacles. 
 First, the framework automatically generates a unique query parser for each DBMS by following the DBMS grammar specifications. It then performs long-term concurrent fuzzing, using generated test cases for commit fuzzing and integrating fixed anomalies into regression tests. The framework also monitors and isolates anomaly threads to capture detailed data. Identified anomalies are de-duplicated and reported to developers for quick resolution, improving the system's robustness.
 
-WingFuzz has reported 236 bugs in total on the tested DBMSs, including ClickHouse, DamengDB, MariaDB, MonetDB, MySQL, PostgreSQL, PolarDB, SQLite, TDengine, TenDB, VastBase-G100, and YashanDB.
+Until our submission, WingFuzz has reported 236 bugs in total on the tested DBMSs, including ClickHouse, DamengDB, MariaDB, MonetDB, MySQL, PostgreSQL, PolarDB, SQLite, TDengine, TenDB, VastBase-G100, and YashanDB in the submitted manuscript.
 
-## Bugs in Database Component
+## Bug Details 
 
-We classify the bugs based on the root cause component. As the table below shows, 89, 59, 38, and 33 bugs are due to errors in the optimizer, parser, executor, and storage engine. 23 are caused by errors in other components like loggers. 
+### 236 Bugs in Different Database Components
+
+We classify the bugs based on the localized component. As the table below shows, 89, 59, 38, and 33 bugs are due to errors in the optimizer, parser, executor, and storage engine. 23 are caused by errors in other components like loggers. 
 
 | Component     | Optimizer | Parser | Executor | Storage-Engine | Others  |
 |---------------|-----------|--------|----------|----------------|---------|
@@ -25,140 +27,38 @@ We classify the bugs based on the root cause component. As the table below shows
 | YashanDB      | 3         | 2      | 0        | 1              | 0       |
 | Total         | 89        | 59     | 38       | 33             | 23      |
 
-## The Details of Bugs
+### 236 Bugs in Different Types and Root Cause
 
-We have detailed information about the bugs we detected. For bugs reported through the bug tracking system, we have retained the IDs, but for some databases, such as TenDB, PolarDB, VastBase-G100, and YashanDB, we reported via email, therefore they lack IDs. 
+We also classify the bugs based on the types and root causes. As the table below shows, XX, XX, XX, XX, XX, XX and XX bugs are due to ...
 
-Before our submission, we have detected the following 236 bugs.
+| Root Cause    | Buffer-Over-Flow | Segmentation Violation | Use-After-Free | Use-After-Poison | Null Pointer Dereference | Undefined Behavior | Assertion Failure | Denial of Service |
+|---------------|------------------|------------------------|----------------|------------------|--------------------------|--------------------|-------------------|-------------------|
+| ClickHouse    | 1                | 28                     |                |                  |                          |                    | 2                 |                   |
+| DamengDB      | 11               | 17                     |                |                  |                          |                    | 4                 |                   |
+| MariaDB       |                  | 9                      |                | 1                |                          |                    |                   |                   |
+| MonetDB       |                  | 12                     |                |                  |                          |                    |                   |                   |
+| MySQL         | 3                |                        |                |                  |                          |                    |                   | 8                 |
+| PostgreSQL    | 3                |                        |                |                  |                          |                    |                   |                   |
+| PolarDB       |                  |                        |                |                  |                          |                    |                   |                   |
+| SQLite        |                  | 1                      |                |                  |                          |                    |                   |                   |
+| TDengine      | 8                | 10                     |                |                  |                          | 2                  | 2                 | 2                 |
+| TenDB         |                  |                        |                |                  |                          |                    |                   |                   |
+| VastBase-G100 |                  |                        |                |                  |                          |                    |                   |                   |
+| YashanDB      |                  |                        |                |                  |                          |                    |                   |                   |
+| Total         |
 
-| Database   | ID             | Bug Type              |
-|------------|----------------|-----------------------|
-| ClickHouse | -              | Assertion Failure     |
-| ClickHouse | -              | Assertion Failure     |
-| ClickHouse | -              | SEGV                  |
-| ClickHouse | -              | SEGV                  |
-| ClickHouse | -              | SEGV                  |
-| ClickHouse | -              | SEGV                  |
-| ClickHouse | -              | SEGV                  |
-| ClickHouse | -              | SEGV                  |
-| ClickHouse | -              | SEGV                  |
-| ClickHouse | -              | SEGV                  |
-| ClickHouse | -              | SEGV                  |
-| ClickHouse | -              | SEGV                  |
-| ClickHouse | -              | SEGV                  |
-| ClickHouse | -              | SEGV                  |
-| ClickHouse | -              | SEGV                  |
-| ClickHouse | -              | SEGV                  |
-| ClickHouse | -              | SEGV                  |
-| ClickHouse | -              | SEGV                  |
-| ClickHouse | -              | SEGV                  |
-| ClickHouse | -              | SEGV                  |
-| ClickHouse | -              | SEGV                  |
-| ClickHouse | -              | SEGV                  |
-| ClickHouse | -              | SEGV                  |
-| ClickHouse | -              | SEGV                  |
-| ClickHouse | -              | SEGV                  |
-| ClickHouse | -              | SEGV                  |
-| ClickHouse | -              | Memory Safety         |
-| ClickHouse | -              | SIGABRT               |
-| ClickHouse | -              | SIGABRT               |
-| ClickHouse | -              | SIGABRT               |
-| ClickHouse | -              | SIGABRT               |
-| DamengDB   | -              | SEGV                  |
-| DamengDB   | -              | SEGV                  |
-| DamengDB   | -              | SEGV                  |
-| DamengDB   | -              | SEGV                  |
-| DamengDB   | -              | SEGV                  |
-| DamengDB   | -              | SEGV                  |
-| DamengDB   | -              | SEGV                  |
-| DamengDB   | -              | SEGV                  |
-| DamengDB   | -              | SEGV                  |
-| DamengDB   | -              | SEGV                  |
-| DamengDB   | -              | SEGV                  |
-| DamengDB   | -              | SEGV                  |
-| DamengDB   | -              | SEGV                  |
-| DamengDB   | -              | SEGV                  |
-| DamengDB   | -              | SEGV                  |
-| DamengDB   | -              | SEGV                  |
-| DamengDB   | -              | SEGV                  |
-| DamengDB   | -              | Assertion Failure     |
-| DamengDB   | -              | Assertion Failure     |
-| DamengDB   | -              | Assertion Failure     |
-| DamengDB   | -              | Assertion Failure     |
-| DamengDB   | -              | SIGFPE                |
-| DamengDB   | -              | SIGFPE                |
-| DamengDB   | -              | SIGFPE                |
-| DamengDB   | -              | SIGFPE                |
-| DamengDB   | -              | SIGFPE                |
-| DamengDB   | -              | SIGFPE                |
-| DamengDB   | -              | SIGFPE                |
-| DamengDB   | -              | SIGFPE                |
-| DamengDB   | -              | SIGFPE                |
-| DamengDB   | -              | SIGFPE                |
-| DamengDB   | -              | SIGFPE                |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32091 | Use After Poison      |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32089 | SEGV                  |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32088 | SEGV                  |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32087 | SEGV                  |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32086 | SEGV                  |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32085 | SEGV                  |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32084 | SEGV                  |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32083 | SEGV                  |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32082 | SEGV                  |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32081 | SEGV                  |
-| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36371 | SEGV                  |
-| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36371 | SEGV                  |
-| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36370 | SEGV                  |
-| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36369 | SEGV                  |
-| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36368 | SEGV                  |
-| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36367 | SEGV                  |
-| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36366 | SEGV                  |
-| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36365 | SEGV                  |
-| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36364 | SEGV                  |
-| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36363 | SEGV                  |
-| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36362 | SEGV                  |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20978 | Denial of Service     |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20977 | Denial of Service     |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20976 | Denial of Service     |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20975 | Denial of Service     |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20974 | Denial of Service     |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20973 | Denial of Service     |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20972 | Denial of Service     |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20971 | Denial of Service     |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2021-2444  | Memory Safety         |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2021-2357  | Memory Safety         |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2021-2230  | Memory Safety         |
-| SQLite     | https://www.cve.org/CVERecord?id=CVE-2021-46100 | SEGV                  |
-| PostgreSQL | https://www.cve.org/CVERecord?id=CVE-2023-5868  | Memory Disclosure     |
-| PostgreSQL | -              | Memory Disclosure     |
-| PostgreSQL | -              | Memory Disclosure     |
-| TDengine   | -              | Heap Buffer Overflow  |
-| TDengine   | -              | Hang Out              |
-| TDengine   | -              | Segmentation Fault    |
-| TDengine   | -              | Assertion Failure     |
-| TDengine   | -              | Overflow              |
-| TDengine   | -              | Crashed               |
-| TDengine   | -              | Heap-Buffer-Overflow  |
-| TDengine   | -              | Hang Out              |
-| TDengine   | -              | Segmentation Fault    |
-| TDengine   | -              | Assertion Failure     |
-| TDengine   | -              | Buffer Overflow       |
-| TDengine   | -              | Crash                 |
-| TDengine   | -              | SIGABRT               |
-| TDengine   | -              | SIGABRT               |
-| TDengine   | -              | SIGABRT               |
-| TDengine   | -              | SIGABRT               |
-| TDengine   | -              | SEGV                  |
-| TDengine   | -              | SEGV                  |
-| TDengine   | -              | SEGV                  |
-| TDengine   | -              | SEGV                  |
-| TDengine   | -              | SEGV                  |
-| TDengine   | -              | SEGV                  |
-| TDengine   | -              | SEGV                  |
 
-Furthermore, WingFuzz has been integrated into detecting more bugs across more databases, identifying over 500 bugs. In the next version, we will add more features and enhancements.
+### Adaption to Other Databases After Submission
+
+Furthermore, WingFuzz has been integrated into detecting more bugs across more databases, identifying over 500 bugs. 
+
+| Root Cause    | Buffer-Over-Flow | Segmentation Violation | Use-After-Free | Use-After-Poison | Null Pointer Dereference | Undefined Behavior | Assertion Failure | Denial of Service |
+|---------------|------------------|------------------------|----------------|------------------|--------------------------|--------------------|-------------------|-------------------|
+| Total         |
 
 ## Case Study of Selected Bugs
+
+First, we select 10 bugs to illustrate the different root causes of our detected bugs.
 
 ### Case Study 1: A Null Pointer Dereference caused by empty arguments of MariaDB’s AES_ENCRYPT function. 
 
@@ -213,3 +113,43 @@ CREATE MERGE TABLE a (b int, subtable2 varchar(32)) PARTITION BY VALUES ON (b)  
 
 The root cause of the bug. MonetDB did not correctly maintain the column names of the merged tables. When the tables were merged recursively, the string representing column names was wrongly set to a null pointer, which caused the NPD when inserting data.
 
+---
+
+Second, more case studies can be referred to links in the following table. Note that while we have detected numerous bugs in industrial databases, they keep their bug information private. Therefore, we are only able to present a selection of bugs from open-source databases that have publicly accessible information.
+
+| Database   | ID                                              | Bug Type               |
+|------------|-------------------------------------------------|------------------------|
+| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32091 | Use-After-Poison       |
+| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32089 | Segmentation Violation |
+| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32088 | Segmentation Violation |
+| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32087 | Segmentation Violation |
+| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32086 | Segmentation Violation |
+| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32085 | Segmentation Violation |
+| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32084 | Segmentation Violation |
+| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32083 | Segmentation Violation |
+| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32082 | Segmentation Violation |
+| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32081 | Segmentation Violation |
+| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36371 | Segmentation Violation |
+| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36371 | Segmentation Violation |
+| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36370 | Segmentation Violation |
+| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36369 | Segmentation Violation |
+| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36368 | Segmentation Violation |
+| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36367 | Segmentation Violation |
+| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36366 | Segmentation Violation |
+| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36365 | Segmentation Violation |
+| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36364 | Segmentation Violation |
+| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36363 | Segmentation Violation |
+| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36362 | Segmentation Violation |
+| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20978 | Denial of Service      |
+| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20977 | Denial of Service      |
+| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20976 | Denial of Service      |
+| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20975 | Denial of Service      |
+| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20974 | Denial of Service      |
+| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20973 | Denial of Service      |
+| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20972 | Denial of Service      |
+| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20971 | Denial of Service      |
+| MySQL      | https://www.cve.org/CVERecord?id=CVE-2021-2444  | Memory Safety          |
+| MySQL      | https://www.cve.org/CVERecord?id=CVE-2021-2357  | Memory Safety          |
+| MySQL      | https://www.cve.org/CVERecord?id=CVE-2021-2230  | Memory Safety          |
+| SQLite     | https://www.cve.org/CVERecord?id=CVE-2021-46100 | Segmentation Violation |
+| PostgreSQL | https://www.cve.org/CVERecord?id=CVE-2023-5868  | Memory Disclosure      |
