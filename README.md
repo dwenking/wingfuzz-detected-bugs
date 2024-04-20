@@ -53,13 +53,11 @@ We also classify the bugs based on the types and root causes. As the table below
 
 Furthermore, WingFuzz has been integrated into detecting more bugs across more databases, identifying 164 bugs. 
 
-|           | Reported | Confirmed |
-| --------- | -------- | --------- |
-| Virtuoso  | 96       | 96        |
-| GaussDB   | 32       | 32        |
-| Comdb2    | 33       | 33        |
-| OceanBase | 3        | 3         |
-| Total     | 164      | 164       |
+|           | Buffer-Overflow | Segmentation Violation | Use-After-Free | Null Pointer Dereference | Undefined Behavior | Assertion Failure | Total |
+| --------- | --------------- | ---------------------- | -------------- | ------------------------ | ------------------ | ----------------- | ----- |
+| Virtuoso  | 23              | 37                     | 4              | 30                       | 0                  | 0                 | 94    |
+| Comdb2    | 4               | 6                      | 1              | 0                        | 22                 | 0                 | 33    |
+| OceanBase | 0               | 3                      | 0              | 0                        | 0                  | 0                 | 3     |
 
 ## Case Study of Selected Bugs
 
