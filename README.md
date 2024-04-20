@@ -190,7 +190,7 @@ UPDATE v0 SET v1 = v1 <= ( WITH v0 ( v1 ) AS ( SELECT ( CASE WHEN 59 THEN ( 0 * 
 
 ---
 
-Second, more case studies can be referred to links in the following table. Note that while we have detected numerous bugs in industrial databases (236 until submission, and 165 after submission), they keep their bug information private. Therefore, we are only able to present a selection of bugs from open-source databases that have publicly accessible information.
+Second, more case studies can be referred to links in the following table. Note that while we have detected numerous bugs in industrial databases (236 until submission, and 164 after submission), they keep their bug information private. Therefore, we are only able to present a selection of bugs from open-source databases that have publicly accessible information.
 
 | Database   | ID                                              | Bug Type               |
 |------------|-------------------------------------------------|------------------------|
