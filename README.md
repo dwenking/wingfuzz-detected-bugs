@@ -89,7 +89,7 @@ INSERT INTO v2 VALUES (15);
 
 ### Case Study 3: An use-after-free in MonetDB when truncating temporary tables.
 
-In MonetDB, when creating a temporary table within a transaction and truncating the temporary table, the MonetDB server will trigger an use-after-free when rollback or commit the transaction.
+In MonetDB, when creating a temporary table within a transaction and truncating the temporary table, the MonetDB server will trigger a use-after-free when rolling back or committing the transaction.
 
 ```sql
 START TRANSACTION;
@@ -102,7 +102,7 @@ ROLLBACK;
 SELECT 1;
 ```
 
-*The root case of the bug.* When executing the test case, the statement `TRUNCATE TABLE t1` operated the truncation operation, which freed the resource of the temporary table. However, it forgot to set the flag representing the finished truncation. When committing or rollbacking the transaction, the temporary table was attempt to truncate again, which causing the already-freed resource being accessed again, leading to use-after-free.
+*The root cause of the bug.* When executing the test case, the statement `TRUNCATE TABLE t1` operated the truncation operation, which freed the resource of the temporary table. However, it forgot to set the flag representing the finished truncation. When committing or rollbacking the transaction, the temporary table was attempted to truncate again, which caused the already-freed resource to be accessed again, leading to use-after-free.
 
 ### Case Study 4: A null pointer dereference in MonetDB with CREATE MERGE TABLE. 
 
@@ -149,7 +149,7 @@ d = (int *) GDKmalloc(sz);
 
 ### Case Study 7: An assertion failure in MariaDB when inserting data into tables with spatial index.
 
-When creating a InnoDB table with SPATIAL index and inserting multiple rows of data, MariaDB will throw an assertion failure `!cursor->index->is_committed()' and raise SIGABRT.
+When creating an InnoDB table with a SPATIAL index and inserting multiple rows of data, MariaDB will throw an assertion failure `!cursor->index->is_committed()' and raise SIGABRT.
 
 ```sql
 CREATE TABLE t1(
@@ -158,10 +158,11 @@ f2 LINESTRING NOT NULL DEFAULT LineFromText('LINESTRING(1 1,2 2,3 3)'),
 SPATIAL INDEX(f2))ENGINE=InnoDB;
 INSERT INTO t1(f1) VALUES(0), (1), (2);
 ```
-*The root cause of the bug.* When a InnoDB table contains any index, the InnoDB engine will try bulk insertion when inserting multiple rows. The bulk insertion depends on the primary key which is automatically constructed by the index. However, the SPATIAL index is a special index which never construct the primary key. Thus, when the bulk insertion were looking for the primary key in the SPATIAL index, it triggered an assertion failure.
+*The root cause of the bug.* When an InnoDB table contains any index, the InnoDB engine will try bulk insertion when inserting multiple rows. The bulk insertion depends on the primary key which is automatically constructed by the index. However, the SPATIAL index is a special index that never constructs the primary key. Thus, when the bulk insertion was looking for the primary key in the SPATIAL index, it triggered an assertion failure.
 
 ### Case Study 8: An assertion failure in SQLite when using RETURNING *.
-The test case creates a table t1 in sqlite with data inserted, creates an empty temporary table t2, and inserts data of t1 into the temprary table t2. If the `RETURNING *` feature is enabled in the second insertion, the SQLite will trigger an assertion failure.
+
+The test case creates a table t1 in SQLite with data inserted, creates an empty temporary table t2, and inserts data of t1 into the temporary table t2. If the `RETURNING *` feature is enabled in the second insertion, the SQLite will trigger an assertion failure.
 
 ```sql
 CREATE TABLE t1(a);
@@ -170,7 +171,18 @@ CREATE TEMP TABLE t2(b);
 INSERT INTO t2 SELECT * FROM t1 RETURNING *;
 ```
 
-*The root cause of the bug.* SQLite has an optimization to make the statement like `INSERT INTO t2 SELECT * FROM t1` run much faster. However, the optimization cannot work together with `RETURNING *`, and it caused an assertion failure in SQLite and raised SIGABRT.
+*The root cause of the bug.* SQLite has an optimization to make statements like `INSERT INTO t2 SELECT * FROM t1` run much faster. However, the optimization cannot work together with `RETURNING *`, and it caused an assertion failure in SQLite and raised SIGABRT.
+
+### Case Study 9: A buffer overflow in MonetDB by complex comparison expressions in queries.
+
+When using the complex nested comparison expression with the WITH clause on a table in MonetDB, the optimizer of MonetDB triggers a buffer overflow while optimizing these comparisons.
+
+```sql
+CREATE TABLE v0 ( v1 SMALLINT ) ; 
+UPDATE v0 SET v1 = v1 <= ( WITH v0 ( v1 ) AS ( SELECT ( CASE WHEN 59 THEN ( 0 * ( ( 'x' < v1 = 255 > v1 - v1 ) ) ) END ) ) SELECT v1 > 16 OR v1 > 2147483647 AND v1 >= 27 AS v4 FROM v0 ORDER BY v1 > v1 % v1 % ( v1 ) NULLS LAST ) OR v1 > -1 ; 
+```
+
+*The root cause of the bug.* To optimize the complex expression in the updating statement, MonetDB tries to rewrite the comparison by reconstructing the AST nodes. However, when meeting the nested comparisons, a wrong type of AST node was bound to the expression, which caused the buffer overflow.
 
 ---
 
