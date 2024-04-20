@@ -4,6 +4,7 @@ We propose WingFuzz which implements continuous fuzzing for DBMSs. It utilizes s
 First, the framework automatically generates a unique query parser for each DBMS by following the DBMS grammar specifications. It then performs long-term concurrent fuzzing, using generated test cases for commit fuzzing and integrating fixed anomalies into regression tests. The framework also monitors and isolates anomaly threads to capture detailed data. Identified anomalies are de-duplicated and reported to developers for quick resolution, improving the system's robustness.
 
 Until our submission, WingFuzz has reported 236 bugs in total on the tested DBMSs, including ClickHouse, DamengDB, MariaDB, MonetDB, MySQL, PostgreSQL, PolarDB, SQLite, TDengine, TenDB, VastBase-G100, and YashanDB in the submitted manuscript.
+From submission until now, we have also adapted WingFuzz to test xxx more DBMS including Virtuoso, Oceanbase, and GaussDB, and have found xxx more bugs in total.
 
 ## Bug Details 
 
