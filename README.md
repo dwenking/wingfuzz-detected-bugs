@@ -49,8 +49,8 @@ We also classify the bugs based on the types and root causes. As the table below
 
 Furthermore, WingFuzz has been integrated into detecting more bugs across more databases, identifying over 500 bugs. 
 
-| Root Cause    | Buffer-Over-Flow | Segmentation Violation | Use-After-Free | Use-After-Poison | Null Pointer Dereference | Undefined Behavior | Assertion Failure | Denial of Service |
-|---------------|------------------|------------------------|----------------|------------------|--------------------------|--------------------|-------------------|-------------------|
+| Root Cause    | Buffer-Over-Flow | Segmentation Violation | Use-After-Free | Use-After-Poison | Null Pointer Dereference | Undefined Behavior | Assertion Failure |
+|---------------|------------------|------------------------|----------------|------------------|--------------------------|--------------------|-------------------|
 | Total         |
 
 ## Case Study of Selected Bugs
