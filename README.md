@@ -63,20 +63,18 @@ Furthermore, WingFuzz has been integrated into detecting more bugs across more d
 
 ## Case Study of Selected Bugs
 
-First, we select 10 bugs to illustrate the different root causes of our detected bugs.
+First, we select 6 bugs to illustrate the different root causes of our detected bugs.
 
-### Case Study 1: A segmentation violation in ClickHouse with user-defined functions. 
+### Case Study 1: A buffer overflow in MonetDB by complex comparison expressions in queries.
 
-When using ClickHouse's UDF grammar to create two functions that call each other and then execute them, it will lead to a stack overflow in the database process and cause a segmentation violation, leading to denial of service.
+When using the complex nested comparison expression with the WITH clause on a table in MonetDB, the optimizer of MonetDB triggers a buffer overflow while optimizing these comparisons.
 
 ```sql
-SET allow_experimental_analyzer = 1;
-CREATE FUNCTION x1 AS x -> x1(x);
-CREATE FUNCTION x2 AS x -> x2(x);
-SELECT x2(2);
+CREATE TABLE v0 ( v1 SMALLINT ) ; 
+UPDATE v0 SET v1 = v1 <= ( WITH v0 ( v1 ) AS ( SELECT ( CASE WHEN 59 THEN ( 0 * ( ( 'x' < v1 = 255 > v1 - v1 ) ) ) END ) ) SELECT v1 > 16 OR v1 > 2147483647 AND v1 >= 27 AS v4 FROM v0 ORDER BY v1 > v1 % v1 % ( v1 ) NULLS LAST ) OR v1 > -1 ; 
 ```
 
-*The root cause of the bug.* ClickHouse's UDF does not identify the depth of recursion when the experimental analyzer is enabled. It is fixed in ClickHouse by adding checks to recursive function calls.
+*The root cause of the bug.* To optimize the complex expression in the updating statement, MonetDB tries to rewrite the comparison by reconstructing the AST nodes. However, when meeting the nested comparisons, a wrong type of AST node was bound to the expression, which caused the buffer overflow in further processing.
 
 ### Case Study 2: A segmentation violation in DamengDB with CREATE VIEW. 
 
@@ -91,7 +89,7 @@ INSERT INTO v2 VALUES (15);
 
 *The root cause of the bug.* DamengDB wrongly handled the insertion operations on the nested views. View v2 is read-only because it is constructed by another view. However, the DamengDB incorrectly identified the readability of this view and still attempted to insert data into it, which caused the segmentation fault.
 
-### Case Study 3: An use-after-free in MonetDB when truncating temporary tables.
+### Case Study 3: A use-after-free in MonetDB when truncating temporary tables.
 
 In MonetDB, when creating a temporary table within a transaction and truncating the temporary table, the MonetDB server will trigger a use-after-free when rolling back or committing the transaction.
 
@@ -108,21 +106,6 @@ SELECT 1;
 
 *The root cause of the bug.* When executing the test case, the statement `TRUNCATE TABLE t1` operated the truncation operation, which freed the resource of the temporary table. However, it forgot to set the flag representing the finished truncation. When committing or rollbacking the transaction, the temporary table was attempted to truncate again, which caused the already-freed resource to be accessed again, leading to use-after-free.
 
-### Case Study 4: A null pointer dereference in MonetDB with CREATE MERGE TABLE. 
-
-The merge table is a unique feature of MonetDB. It can merge the tables with the same column definitions into a single table. However, when recursively merging three tables and then inserting data, the MonetDB crashes due to a null pointer dereference.
-
-```sql
-CREATE MERGE TABLE a (b int, subtable2 varchar(32)) PARTITION BY VALUES ON (b)  ;
- CREATE MERGE TABLE t1 (c int, d varchar(32)) PARTITION BY RANGE ON (c)  ;
- CREATE TABLE id (t1907060_1 int, age varchar(32))  ;
- ALTER TABLE a ADD TABLE id AS PARTITION IN ('1', '2', '3')  ;
- ALTER TABLE t1 ADD TABLE a AS PARTITION FROM '0' TO '100'  ;
- SELECT c, d FROM t1 ;
-```
-
-*The root cause of the bug.* MonetDB did not correctly maintain the column names of the merged tables. When the tables were merged recursively, the string representing column names was wrongly set to a null pointer, which caused the NPD when inserting data.
-
 ### Case Study 5: A null pointer dereference caused by empty arguments of MariaDB’s AES_ENCRYPT function. 
 
 As the PoC below shows, a user can crash the whole MariaDB server by simply calling the AES_ENCRYPT function without any arguments, leading to a denial of service. The triggering of the crash does not rely on any table creation or data insertion.
@@ -131,7 +114,7 @@ As the PoC below shows, a user can crash the whole MariaDB server by simply call
 SELECT AES_ENCRYPT ( );
 ```
 
-*The root cause of the bug.* The bug is introduced in MariaDB 11.2 when the grammar of optional arguments for the AES_ENCRYPT function is supported. The code for parsing the function AES_ENCRYPT is completely rewritten to support this new grammar. However, the rewritten code does not account for the function call without arguments, leading to a crash.
+*The root cause of the bug.* The bug is introduced in MariaDB 11.2 when the grammar of optional arguments for the AES_ENCRYPT function is supported. The code for parsing the function AES_ENCRYPT is completely rewritten to support this new grammar. However, the rewritten code does not account for the function call without arguments, leading to a null pointer dereference.
 
 ### Case Study 6: An undefined behavior (integer overflow) in MonetDB when calling SQL function levenshtein(). 
 
@@ -163,30 +146,6 @@ SPATIAL INDEX(f2))ENGINE=InnoDB;
 INSERT INTO t1(f1) VALUES(0), (1), (2);
 ```
 *The root cause of the bug.* When an InnoDB table contains any index, the InnoDB engine will try bulk insertion when inserting multiple rows. The bulk insertion depends on the primary key which is automatically constructed by the index. However, the SPATIAL index is a special index that never constructs the primary key. Thus, when the bulk insertion was looking for the primary key in the SPATIAL index, it triggered an assertion failure.
-
-### Case Study 8: An assertion failure in SQLite when using RETURNING *.
-
-The test case creates a table t1 in SQLite with data inserted, creates an empty temporary table t2, and inserts data of t1 into the temporary table t2. If the `RETURNING *` feature is enabled in the second insertion, the SQLite will trigger an assertion failure.
-
-```sql
-CREATE TABLE t1(a);
-INSERT INTO t1(a) VALUES(1);
-CREATE TEMP TABLE t2(b);
-INSERT INTO t2 SELECT * FROM t1 RETURNING *;
-```
-
-*The root cause of the bug.* SQLite has an optimization to make statements like `INSERT INTO t2 SELECT * FROM t1` run much faster. However, the optimization cannot work together with `RETURNING *`, and it caused an assertion failure in SQLite and raised SIGABRT.
-
-### Case Study 9: A buffer overflow in MonetDB by complex comparison expressions in queries.
-
-When using the complex nested comparison expression with the WITH clause on a table in MonetDB, the optimizer of MonetDB triggers a buffer overflow while optimizing these comparisons.
-
-```sql
-CREATE TABLE v0 ( v1 SMALLINT ) ; 
-UPDATE v0 SET v1 = v1 <= ( WITH v0 ( v1 ) AS ( SELECT ( CASE WHEN 59 THEN ( 0 * ( ( 'x' < v1 = 255 > v1 - v1 ) ) ) END ) ) SELECT v1 > 16 OR v1 > 2147483647 AND v1 >= 27 AS v4 FROM v0 ORDER BY v1 > v1 % v1 % ( v1 ) NULLS LAST ) OR v1 > -1 ; 
-```
-
-*The root cause of the bug.* To optimize the complex expression in the updating statement, MonetDB tries to rewrite the comparison by reconstructing the AST nodes. However, when meeting the nested comparisons, a wrong type of AST node was bound to the expression, which caused the buffer overflow in further processing.
 
 ---
 
