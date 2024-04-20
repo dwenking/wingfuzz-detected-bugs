@@ -55,10 +55,11 @@ Furthermore, WingFuzz has been integrated into detecting more bugs across more d
 
 |           | Buffer-Overflow | Segmentation Violation | Use-After-Free | Null Pointer Dereference | Undefined Behavior | Assertion Failure | Total |
 | --------- | --------------- | ---------------------- | -------------- | ------------------------ | ------------------ | ----------------- | ----- |
-| Virtuoso  | 23              | 37                     | 4              | 30                       | 0                  | 0                 | 94    |
+| Virtuoso  | 23              | 39                     | 4              | 30                       | 0                  | 0                 | 96    |
 | Comdb2    | 4               | 6                      | 1              | 0                        | 22                 | 0                 | 33    |
 | GaussDB   | 1               | 3                      | 0              | 1                        | 26                 | 1                 | 32    |
 | OceanBase | 0               | 3                      | 0              | 0                        | 0                  | 0                 | 3     |
+| Total     | 28              | 51                     | 5              | 31                       | 48                 | 1                 | 164   |
 
 ## Case Study of Selected Bugs
 
