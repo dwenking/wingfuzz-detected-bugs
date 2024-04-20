@@ -138,16 +138,15 @@ Second, more case studies can be referred to links in the following table. Note 
 
 | Database   | ID                                              | Bug Type               |
 |------------|-------------------------------------------------|------------------------|
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32091 | Use-After-Poison       |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32089 | Segmentation Violation |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32088 | Segmentation Violation |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32087 | Segmentation Violation |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32086 | Segmentation Violation |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32085 | Segmentation Violation |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32084 | Segmentation Violation |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32083 | Segmentation Violation |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32082 | Segmentation Violation |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32081 | Segmentation Violation |
+| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20978 | Denial of Service      |
+| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20977 | Denial of Service      |
+| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20976 | Denial of Service      |
+| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20975 | Denial of Service      |
+| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20974 | Denial of Service      |
+| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20973 | Denial of Service      |
+| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20972 | Denial of Service      |
+| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20971 | Denial of Service      |
+| PostgreSQL | https://www.cve.org/CVERecord?id=CVE-2023-5868  | Memory Disclosure      |
 | MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36371 | Segmentation Violation |
 | MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36371 | Segmentation Violation |
 | MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36370 | Segmentation Violation |
@@ -159,16 +158,13 @@ Second, more case studies can be referred to links in the following table. Note 
 | MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36364 | Segmentation Violation |
 | MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36363 | Segmentation Violation |
 | MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36362 | Segmentation Violation |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20978 | Denial of Service      |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20977 | Denial of Service      |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20976 | Denial of Service      |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20975 | Denial of Service      |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20974 | Denial of Service      |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20973 | Denial of Service      |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20972 | Denial of Service      |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20971 | Denial of Service      |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2021-2444  | Memory Safety          |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2021-2357  | Memory Safety          |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2021-2230  | Memory Safety          |
-| SQLite     | https://www.cve.org/CVERecord?id=CVE-2021-46100 | Segmentation Violation |
-| PostgreSQL | https://www.cve.org/CVERecord?id=CVE-2023-5868  | Memory Disclosure      |
+| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32091 | Use-After-Poison       |
+| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32089 | Segmentation Violation |
+| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32088 | Segmentation Violation |
+| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32087 | Segmentation Violation |
+| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32086 | Segmentation Violation |
+| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32085 | Segmentation Violation |
+| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32084 | Segmentation Violation |
+| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32083 | Segmentation Violation |
+| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32082 | Segmentation Violation |
+| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32081 | Segmentation Violation |
