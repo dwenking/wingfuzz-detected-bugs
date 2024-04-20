@@ -30,23 +30,23 @@ We classify the bugs based on the localized component. As the table below shows,
 
 ### 236 Bugs in Different Types and Root Cause
 
-We also classify the bugs based on the types and root causes. As the table below shows, among the 236 identified bugs, there are 31 buffer overflows, 133 segmentation violations, 19 use-after-frees, and 10 use-after-poisons. These vulnerabilities are particularly severe as they could serve as effective attack vectors for executing arbitrary code. Specifically, attackers could exploit these vulnerabilities to take control of a DBMS server over the network, potentially leading to system control or privilege escalation. These bugs could significantly compromise the availability of the DBMS server. Additionally, WingFuzz also finds 7 null pointer dereferences, 30 assertion failures, and 6 cases of undefined behavior. These errors, primarily internal to the DBMSs, could lead to denial-of-service by causing the DBMS to crash or result in other unforeseen damages.
+We also classify the bugs based on the types and root causes. As the table below shows, among the 236 identified bugs, there are 31 buffer overflows, 133 segmentation violations, and 29 use-after-frees. These vulnerabilities are particularly severe as they could serve as effective attack vectors for executing arbitrary code. Specifically, attackers could exploit these vulnerabilities to take control of a DBMS server over the network, potentially leading to system control or privilege escalation. These bugs could significantly compromise the availability of the DBMS server. Additionally, WingFuzz also finds 7 null pointer dereferences, 30 assertion failures, and 6 cases of undefined behavior. These errors, primarily internal to the DBMSs, could lead to denial-of-service by causing the DBMS to crash or result in other unforeseen damages.
 
-| Root Cause    | Buffer-Overflow | Segmentation Violation | Use-After-Free | Use-After-Poison | Null Pointer Dereference | Undefined Behavior | Assertion Failure | Total |
-| ------------- | --------------- | ---------------------- | -------------- | ---------------- | ------------------------ | ------------------ | ----------------- | ----- |
-| ClickHouse    | 1               | 28                     | 0              | 0                | 0                        | 0                  | 2                 | 31    |
-| DamengDB      | 11              | 17                     | 10             | 0                | 0                        | 0                  | 14                | 52    |
-| MariaDB       | 0               | 9                      | 0              | 1                | 0                        | 0                  | 0                 | 10    |
-| MonetDB       | 0               | 12                     | 0              | 0                | 0                        | 0                  | 0                 | 12    |
-| MySQL         | 3               | 8                      | 0              | 0                | 0                        | 0                  | 0                 | 11    |
-| PostgreSQL    | 3               | 0                      | 0              | 0                | 0                        | 0                  | 0                 | 3     |
-| PolarDB       | 0               | 9                      | 4              | 3                | 3                        | 0                  | 2                 | 21    |
-| SQLite        | 3               | 6                      | 0              | 0                | 2                        | 0                  | 6                 | 17    |
-| TDengine      | 8               | 12                     | 0              | 0                | 0                        | 2                  | 2                 | 24    |
-| TenDB         | 0               | 14                     | 0              | 3                | 1                        | 0                  | 0                 | 18    |
-| VastBase-G100 | 0               | 10                     | 5              | 3                | 0                        | 3                  | 2                 | 23    |
-| YashanDB      | 2               | 0                      | 0              | 0                | 1                        | 1                  | 2                 | 6     |
-| Total         | 31              | 133                    | 19             | 10               | 7                        | 6                  | 30                | 236   |
+| Root Cause    | Buffer-Overflow | Segmentation Violation | Use-After-Free | Null Pointer Dereference | Undefined Behavior | Assertion Failure | Total |
+| ------------- | --------------- | ---------------------- | -------------- | ------------------------ | ------------------ | ----------------- | ----- |
+| ClickHouse    | 1               | 28                     | 0              | 0                        | 0                  | 2                 | 31    |
+| DamengDB      | 11              | 27                     | 8              | 0                        | 0                  | 14                | 60    |
+| MariaDB       | 0               | 8                      | 2              | 0                        | 0                  | 0                 | 10    |
+| MonetDB       | 3               | 8                      | 1              | 0                        | 0                  | 0                 | 12    |
+| MySQL         | 3               | 8                      | 0              | 0                        | 0                  | 0                 | 11    |
+| PostgreSQL    | 3               | 0                      | 0              | 0                        | 0                  | 0                 | 3     |
+| PolarDB       | 0               | 9                      | 7              | 3                        | 0                  | 2                 | 21    |
+| SQLite        | 0               | 9                      | 0              | 2                        | 0                  | 6                 | 17    |
+| TDengine      | 8               | 12                     | 0              | 0                        | 2                  | 2                 | 24    |
+| TenDB         | 0               | 14                     | 3              | 1                        | 0                  | 0                 | 18    |
+| VastBase-G100 | 0               | 10                     | 8              | 0                        | 3                  | 2                 | 23    |
+| YashanDB      | 2               | 0                      | 0              | 1                        | 1                  | 2                 | 6     |
+| Total         | 31              | 133                    | 29             | 7                        | 6                  | 30                | 236   |
 
 
 ### Adaption to Other Databases After Submission
