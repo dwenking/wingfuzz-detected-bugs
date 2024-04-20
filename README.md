@@ -30,23 +30,19 @@ We classify the bugs based on the localized component. As the table below shows,
 
 ### 236 Bugs in Different Types and Root Cause
 
-We also classify the bugs based on the types and root causes. As the table below shows, XX, XX, XX, XX, XX, XX and XX bugs are due to ...
+We also classify the bugs based on the types and root causes. As the table below shows, among the 236 identified bugs, there are 31 buffer overflows, 108 segmentation violations, 21 use-after-frees, and 10 use-after-poisons. These vulnerabilities are particularly severe as they could serve as effective attack vectors for executing arbitrary code. Specifically, attackers could exploit these vulnerabilities to take control of a DBMS server over the network, potentially leading to system control or privilege escalation. These bugs could significantly compromise the availability of the DBMS server. Additionally, WingFuzz also finds 7 null pointer dereferences, 30 assertion failures, and 6 cases of undefined behavior. These errors, primarily internal to the DBMSs, could lead to denial-of-service by causing the DBMS to crash or result in other unforeseen damages.
 
 | Root Cause    | Buffer-Over-Flow | Segmentation Violation | Use-After-Free | Use-After-Poison | Null Pointer Dereference | Undefined Behavior | Assertion Failure | Denial of Service |
 |---------------|------------------|------------------------|----------------|------------------|--------------------------|--------------------|-------------------|-------------------|
-| ClickHouse    | 1                | 28                     |                |                  |                          |                    | 2                 |                   |
-| DamengDB      | 11               | 17                     |                |                  |                          |                    | 4                 |                   |
-| MariaDB       |                  | 9                      |                | 1                |                          |                    |                   |                   |
-| MonetDB       |                  | 12                     |                |                  |                          |                    |                   |                   |
-| MySQL         | 3                |                        |                |                  |                          |                    |                   | 8                 |
+| ClickHouse    | 1                | 28                     | 2              |                  |                          |                    |                   |                   |
+| DamengDB      | 11               | 17                     | 10             | 14               | 8                        |                    |                   |                   |
+| MariaDB       | 9                | 1                      |                |                  |                          |                    |                   |                   |
+| MonetDB       | 12               |                        |                |                  |                          |                    |                   |                   |
+| MySQL         | 3                | 8                      |                |                  |                          |                    |                   |                   |
 | PostgreSQL    | 3                |                        |                |                  |                          |                    |                   |                   |
-| PolarDB       |                  |                        |                |                  |                          |                    |                   |                   |
-| SQLite        |                  | 1                      |                |                  |                          |                    |                   |                   |
-| TDengine      | 8                | 10                     |                |                  |                          | 2                  | 2                 | 2                 |
-| TenDB         |                  |                        |                |                  |                          |                    |                   |                   |
-| VastBase-G100 |                  |                        |                |                  |                          |                    |                   |                   |
-| YashanDB      |                  |                        |                |                  |                          |                    |                   |                   |
-| Total         |
+| PolarDB       | 9                | 4                      | 3              | 3                | 2                        |                    |                   |                   |
+| SQLite        | 3                | 1                      | 2              | 6                | 5                        |                    |                   |                   |
+| TDengine      | 8                | 10                     | 2              | 2                | 2                        |                    |                   |                   |
 
 
 ### Adaption to Other Databases After Submission
@@ -123,7 +119,7 @@ CREATE TABLE v0 ( v1 CHAR ( 100 ) );
  INSERT INTO v0 ( v1 ) SELECT group_concat ( 'table tn3 row 99' ) FROM v0 , v0 AS tri , v0 AS OMW WHERE 10 LIMIT 4 ; 
  SELECT levenshtein ( v1 , v1 , 16 , 10 , 561 ) , v1 , v1 FROM v0 ; 
 ```
-The root cause of the bug. MonetDB uniquely support the function levenshtein() to calculate the Damerau–Levenshtein distance between two strings. When the lengths of the two strings are m and n, MonetDB needs to allocate an array of length m×n to perform the algorithm. However, the variable used to calculate the array length was stored as an integer, which led to integer overflow when the lengths of the two strings are large. MonetDB fixed the bug by changing the data type from int to long.
+The root cause of the bug. MonetDB uniquely supports the function levenshtein() to calculate the Damerau–Levenshtein distance between two strings. When the lengths of the two strings are m and n, MonetDB needs to allocate an array of length m×n to perform the algorithm. However, the variable used to calculate the array length was stored as a 32-bit integer, which led to an integer overflow when the lengths of the two strings were large. MonetDB fixed the bug by changing the data type from int to long.
 ```c++
 int sz;						                            /* number of cells in matrix */
 n = (int) strlen(s);
