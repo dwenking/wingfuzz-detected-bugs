@@ -147,6 +147,19 @@ sz = (n + 1) * (m + 1) * sizeof(int);    /* integer overflow */
 d = (int *) GDKmalloc(sz);
 ```
 
+### Case Study: An assertion failure in MariaDB when inserting data into tables with spatial index.
+
+When creating a InnoDB table with SPATIAL index and inserting multiple rows of data, MariaDB will throw an assertion failure `!cursor->index->is_committed()' and raise SIGABRT.
+
+```sql
+CREATE TABLE t1(
+f1 SERIAL,
+f2 LINESTRING NOT NULL DEFAULT LineFromText('LINESTRING(1 1,2 2,3 3)'),
+SPATIAL INDEX(f2))ENGINE=InnoDB;
+INSERT INTO t1(f1) VALUES(0), (1), (2);
+```
+*The root cause of the bug.* When a InnoDB table contains any index, the InnoDB engine will try bulk insertion when inserting multiple rows. The bulk insertion depends on the primary key which is automatically constructed by the index. However, the SPATIAL index does not construct the primary key. Thus, when the bulk insertion were looking for the primary key in the SPATIAL index, it triggered an assertion failure.
+
 ---
 
 Second, more case studies can be referred to links in the following table. Note that while we have detected numerous bugs in industrial databases (236 until submission, and **xxx(TODO)** after submission), they keep their bug information private. Therefore, we are only able to present a selection of bugs from open-source databases that have publicly accessible information.
