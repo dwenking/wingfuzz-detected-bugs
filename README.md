@@ -121,7 +121,7 @@ CREATE MERGE TABLE a (b int, subtable2 varchar(32)) PARTITION BY VALUES ON (b)  
 
 ### Case Study: A null pointer dereference caused by empty arguments of MariaDB’s AES_ENCRYPT function. 
 
-As the PoC below shows, a user can crash the whole MariaDB server by simply calling the AES_ENCRYPT function without any arguments, leading to a denial of service. The trigger of the crash does not rely on any table creation or data insertion.
+As the PoC below shows, a user can crash the whole MariaDB server by simply calling the AES_ENCRYPT function without any arguments, leading to a denial of service. The triggering of the crash does not rely on any table creation or data insertion.
 
 ```sql
 SELECT AES_ENCRYPT ( );
@@ -159,6 +159,18 @@ SPATIAL INDEX(f2))ENGINE=InnoDB;
 INSERT INTO t1(f1) VALUES(0), (1), (2);
 ```
 *The root cause of the bug.* When a InnoDB table contains any index, the InnoDB engine will try bulk insertion when inserting multiple rows. The bulk insertion depends on the primary key which is automatically constructed by the index. However, the SPATIAL index is a special index which never construct the primary key. Thus, when the bulk insertion were looking for the primary key in the SPATIAL index, it triggered an assertion failure.
+
+### Case Study: An assertion failure in SQLite when using RETURNING *.
+The test case creates a table t1 in sqlite with data inserted, creates an empty temporary table t2, and inserts data of t1 into the temprary table t2. If the `RETURNING *` feature is enabled in the second insertion, the SQLite will trigger an assertion failure.
+
+```sql
+CREATE TABLE t1(a);
+INSERT INTO t1(a) VALUES(1);
+CREATE TEMP TABLE t2(b);
+INSERT INTO t2 SELECT * FROM t1 RETURNING *;
+```
+
+*The root cause of the bug.* SQLite has an optimization to make the statement like `INSERT INTO t2 SELECT * FROM t1` run much faster. However, the optimization cannot work together with `RETURNING *`, and it caused an assertion failure in SQLite and raised SIGABRT.
 
 ---
 
