@@ -114,6 +114,24 @@ CREATE MERGE TABLE a (b int, subtable2 varchar(32)) PARTITION BY VALUES ON (b)  
 
 The root cause of the bug. MonetDB did not correctly maintain the column names of the merged tables. When the tables were merged recursively, the string representing column names was wrongly set to a null pointer, which caused the NPD when inserting data.
 
+### Case Study 5: An undefined behavior (integer overflow) in MonetDB when calling SQL function levenshtein(). 
+
+When passing two large strings to the function levenshtein(), a piece of code in MonetDB that calculated the array length triggers an integer overflow. If execution continued, this led to array out-of-bounds access and then the DBMS crashed.
+```sql
+CREATE TABLE v0 ( v1 CHAR ( 100 ) );
+ INSERT INTO v0 VALUES ( 222 ) , ( 10 ) , ( 3 ) , ( 947 ) , ( 742 ) , ( 1 ) , ( 306 ) , ( 10 ) , ( 510 ) , ( 1.100000 ) , ( 9223372036854775807 ) , ( 333 ) , ( 106 ) , ( 10 ) , ( 10 ) , ( 10 ) , ( 10 ) , ( 10 ) , ( NULL ) , ( 222 ) , ( 10.100000 ) , ( 5 ) , ( 2 ) , ( 1 ) , ( 2 ) , ( 34 ) ; 
+ INSERT INTO v0 ( v1 ) SELECT group_concat ( 'table tn3 row 99' ) FROM v0 , v0 AS tri , v0 AS OMW WHERE 10 LIMIT 4 ; 
+ SELECT levenshtein ( v1 , v1 , 16 , 10 , 561 ) , v1 , v1 FROM v0 ; 
+```
+The root cause of the bug. MonetDB uniquely support the function levenshtein() to calculate the Damerau–Levenshtein distance between two strings. When the lengths of the two strings are m and n, MonetDB needs to allocate an array of length m×n to perform the algorithm. However, the variable used to calculate the array length was stored as an integer, which led to integer overflow when the lengths of the two strings are large. MonetDB fixed the bug by changing the data type from int to long.
+```c++
+int sz;						                            /* number of cells in matrix */
+n = (int) strlen(s);
+m = (int) strlen(t);
+sz = (n + 1) * (m + 1) * sizeof(int);    /* integer overflow */
+d = (int *) GDKmalloc(sz);
+```
+
 ---
 
 Second, more case studies can be referred to links in the following table. Note that while we have detected numerous bugs in industrial databases, they keep their bug information private. Therefore, we are only able to present a selection of bugs from open-source databases that have publicly accessible information.
