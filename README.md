@@ -69,9 +69,9 @@ The root cause of the bug. The bug is introduced in MariaDB 11.2 when the gramma
 
 The reason for detecting the bug by Wingfuzz. MariaDB includes test cases of AES_ENCRYPT, but it does not contain a test case of AES_ENCRYPT without arguments. Thus the bug-hidden commit passed the unit testing and regression testing of MariaDB and was released in MariaDB 11.2. Wingfuzz detected the code changes for AES_ENCRYPT when running test cases of AES_ENCRYPT in the corpus. Then, Wingfuzz started the commit fuzzing from these test cases and successfully found the bug in MariaDB 11.2.
 
-### Case Study 2: A stack overflow in ClickHouse with user-defined functions. 
+### Case Study 2: A segmentation fault in ClickHouse with user-defined functions. 
 
-When using ClickHouse's UDF grammar to create two functions that call each other and then execute them, it will lead to a stack overflow in the database process and cause a crash.
+When using ClickHouse's UDF grammar to create two functions that call each other and then execute them, it will lead to a stack overflow in the database process and cause a segmentation fault.
 
 ```sql
 SET allow_experimental_analyzer = 1;
