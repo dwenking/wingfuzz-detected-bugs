@@ -53,7 +53,7 @@ We also classify the bugs based on the types and root causes. As the table below
 
 Furthermore, WingFuzz has been integrated into detecting more bugs across more databases, identifying over 500 bugs. 
 
-| Root Cause    | Buffer-Over-Flow | Segmentation Violation | Use-After-Free | Use-After-Poison | Null Pointer Dereference | Undefined Behavior | Assertion Failure |
+| Root Cause    | Buffer-Overflow | Segmentation Violation | Use-After-Free | Use-After-Poison | Null Pointer Dereference | Undefined Behavior | Assertion Failure |
 |---------------|------------------|------------------------|----------------|------------------|--------------------------|--------------------|-------------------|
 | Total         |
 
@@ -61,21 +61,9 @@ Furthermore, WingFuzz has been integrated into detecting more bugs across more d
 
 First, we select 10 bugs to illustrate the different root causes of our detected bugs.
 
-### Case Study 1: A Null Pointer Dereference caused by empty arguments of MariaDB’s AES_ENCRYPT function. 
+### Case Study: A segmentation violation in ClickHouse with user-defined functions. 
 
-As the PoC below shows, a user can crash the whole MariaDB server by simply calling the AES_ENCRYPT function without any arguments, leading to a denial of service. The trigger of the crash does not rely on any table creation or data insertion.
-
-```sql
-SELECT AES_ENCRYPT ( );
-```
-
-The root cause of the bug. The bug is introduced in MariaDB 11.2 when the grammar of optional arguments for the AES_ENCRYPT function is supported. The code for parsing the function AES_ENCRYPT is completely rewritten to support this new grammar. However, the rewritten code does not account for the function call without arguments, leading to a crash.
-
-The reason for detecting the bug by Wingfuzz. MariaDB includes test cases of AES_ENCRYPT, but it does not contain a test case of AES_ENCRYPT without arguments. Thus the bug-hidden commit passed the unit testing and regression testing of MariaDB and was released in MariaDB 11.2. Wingfuzz detected the code changes for AES_ENCRYPT when running test cases of AES_ENCRYPT in the corpus. Then, Wingfuzz started the commit fuzzing from these test cases and successfully found the bug in MariaDB 11.2.
-
-### Case Study 2: A segmentation fault in ClickHouse with user-defined functions. 
-
-When using ClickHouse's UDF grammar to create two functions that call each other and then execute them, it will lead to a stack overflow in the database process and cause a segmentation fault.
+When using ClickHouse's UDF grammar to create two functions that call each other and then execute them, it will lead to a stack overflow in the database process and cause a segmentation violation, leading to denial of service.
 
 ```sql
 SET allow_experimental_analyzer = 1;
@@ -84,11 +72,11 @@ CREATE FUNCTION x2 AS x -> x2(x);
 SELECT x2(2);
 ```
 
-The root cause of the bug. ClickHouse's UDF does not identify the depth of recursion when the experimental analyzer is enabled. It is fixed in ClickHouse by adding checks to recursive function calls.
+*The root cause of the bug.* ClickHouse's UDF does not identify the depth of recursion when the experimental analyzer is enabled. It is fixed in ClickHouse by adding checks to recursive function calls.
 
-### Case Study 3: A segmentation fault in DamengDB with CREATE VIEW. 
+### Case Study: A segmentation violation in DamengDB with CREATE VIEW. 
 
-When creating view v1 from a table, creating view v2 from v1 with the check option in DamengDB enabled, and inserting data into v2, the server crashes due to a segmentation fault, leading to denial of service.
+When creating view v1 from a table, creating view v2 from v1 with the check option in DamengDB enabled, and inserting data into v2, the server crashes due to a segmentation violation, leading to denial of service.
 
 ```sql
 CREATE TABLE t1 (c1 INT);
@@ -97,9 +85,26 @@ CREATE VIEW v2 AS SELECT * FROM v1 WITH CHECK OPTION;
 INSERT INTO v2 VALUES (15);
 ```
 
-The root cause of the bug. DamengDB wrongly handled the insertion operations on the nested views. View v2 is read-only since it is constructed by another view. However, the DamengDB incorrectly identified the readability of this view and still attempted to insert data into it, which caused the segmentation fault.
+*The root cause of the bug.* DamengDB wrongly handled the insertion operations on the nested views. View v2 is read-only because it is constructed by another view. However, the DamengDB incorrectly identified the readability of this view and still attempted to insert data into it, which caused the segmentation fault.
 
-### Case Study 4: A Null Pointer Dereference in MonetDB with CREATE MERGE TABLE. 
+### Case Study: An use-after-free in MonetDB when truncating temporary tables.
+
+In MonetDB, when creating a temporary table within a transaction and truncating the temporary table, the MonetDB server will trigger an use-after-free when rollback or commit the transaction.
+
+```sql
+START TRANSACTION;
+CREATE TEMPORARY TABLE t1 (keyc INT, c1 VARCHAR(100), c2 VARCHAR(100), PRIMARY KEY(keyc)) on commit delete rows;
+CREATE TABLE c1(c2 DECIMAL(9,4) NOT NULL);
+SAVEPOINT a_a;
+TRUNCATE TABLE t1;
+DELETE FROM w;
+ROLLBACK;
+SELECT 1;
+```
+
+*The root case of the bug.* When executing the test case, the statement `TRUNCATE TABLE t1` operated the truncation operation, which freed the resource of the temporary table. However, it forgot to set the flag representing the finished truncation. When committing or rollbacking the transaction, the temporary table was attempt to truncate again, which causing the already-freed resource being accessed again, leading to use-after-free.
+
+### Case Study: A null pointer dereference in MonetDB with CREATE MERGE TABLE. 
 
 The merge table is a unique feature of MonetDB. It can merge the tables with the same column definitions into a single table. However, when recursively merging three tables and then inserting data, the MonetDB crashes due to a null pointer dereference.
 
@@ -112,9 +117,19 @@ CREATE MERGE TABLE a (b int, subtable2 varchar(32)) PARTITION BY VALUES ON (b)  
  SELECT c, d FROM t1 ;
 ```
 
-The root cause of the bug. MonetDB did not correctly maintain the column names of the merged tables. When the tables were merged recursively, the string representing column names was wrongly set to a null pointer, which caused the NPD when inserting data.
+*The root cause of the bug.* MonetDB did not correctly maintain the column names of the merged tables. When the tables were merged recursively, the string representing column names was wrongly set to a null pointer, which caused the NPD when inserting data.
 
-### Case Study 5: An undefined behavior (integer overflow) in MonetDB when calling SQL function levenshtein(). 
+### Case Study: A null pointer dereference caused by empty arguments of MariaDB’s AES_ENCRYPT function. 
+
+As the PoC below shows, a user can crash the whole MariaDB server by simply calling the AES_ENCRYPT function without any arguments, leading to a denial of service. The trigger of the crash does not rely on any table creation or data insertion.
+
+```sql
+SELECT AES_ENCRYPT ( );
+```
+
+*The root cause of the bug.* The bug is introduced in MariaDB 11.2 when the grammar of optional arguments for the AES_ENCRYPT function is supported. The code for parsing the function AES_ENCRYPT is completely rewritten to support this new grammar. However, the rewritten code does not account for the function call without arguments, leading to a crash.
+
+### Case Study: An undefined behavior (integer overflow) in MonetDB when calling SQL function levenshtein(). 
 
 When passing two large strings to the function levenshtein(), a piece of code in MonetDB that calculated the array length triggers an integer overflow. If execution continued, this led to array out-of-bounds access and then the DBMS crashed.
 ```sql
@@ -123,7 +138,7 @@ CREATE TABLE v0 ( v1 CHAR ( 100 ) );
  INSERT INTO v0 ( v1 ) SELECT group_concat ( 'table tn3 row 99' ) FROM v0 , v0 AS tri , v0 AS OMW WHERE 10 LIMIT 4 ; 
  SELECT levenshtein ( v1 , v1 , 16 , 10 , 561 ) , v1 , v1 FROM v0 ; 
 ```
-The root cause of the bug. MonetDB uniquely supports the function levenshtein() to calculate the Damerau–Levenshtein distance between two strings. When the lengths of the two strings are m and n, MonetDB needs to allocate an array of length m×n to perform the algorithm. However, the variable used to calculate the array length was stored as a 32-bit integer, which led to an integer overflow when the lengths of the two strings were large. MonetDB fixed the bug by changing the data type from int to long.
+*The root cause of the bug.* MonetDB uniquely supports the function levenshtein() to calculate the Damerau–Levenshtein distance between two strings. When the lengths of the two strings are m and n, MonetDB needs to allocate an array of length m×n to perform the algorithm. However, the variable used to calculate the array length was stored as a 32-bit integer, which led to an integer overflow when the lengths of the two strings were large. MonetDB fixed the bug by changing the data type from int to long.
 ```c++
 int sz;						                            /* number of cells in matrix */
 n = (int) strlen(s);
