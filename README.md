@@ -144,7 +144,7 @@ CREATE TABLE v0 ( v1 CHAR ( 100 ) );
 ```
 *The root cause of the bug.* MonetDB uniquely supports the function levenshtein() to calculate the Damerau–Levenshtein distance between two strings. When the lengths of the two strings are m and n, MonetDB needs to allocate an array of length m×n to perform the algorithm. However, the variable used to calculate the array length was stored as a 32-bit integer, which led to an integer overflow when the lengths of the two strings were large. MonetDB fixed the bug by changing the data type from int to long.
 ```c++
-int sz;						                            /* number of cells in matrix */
+int sz;
 n = (int) strlen(s);
 m = (int) strlen(t);
 sz = (n + 1) * (m + 1) * sizeof(int);    /* integer overflow */
