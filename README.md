@@ -106,7 +106,7 @@ SELECT 1;
 
 *The root cause of the bug.* When executing the test case, the statement `TRUNCATE TABLE t1` operated the truncation operation, which freed the resource of the temporary table. However, it forgot to set the flag representing the finished truncation. When committing or rollbacking the transaction, the temporary table was attempted to truncate again, which caused the already-freed resource to be accessed again, leading to use-after-free.
 
-### Case Study 5: A null pointer dereference caused by empty arguments of MariaDB’s AES_ENCRYPT function. 
+### Case Study 4: A null pointer dereference caused by empty arguments of MariaDB’s AES_ENCRYPT function. 
 
 As the PoC below shows, a user can crash the whole MariaDB server by simply calling the AES_ENCRYPT function without any arguments, leading to a denial of service. The triggering of the crash does not rely on any table creation or data insertion.
 
@@ -116,7 +116,7 @@ SELECT AES_ENCRYPT ( );
 
 *The root cause of the bug.* The bug is introduced in MariaDB 11.2 when the grammar of optional arguments for the AES_ENCRYPT function is supported. The code for parsing the function AES_ENCRYPT is completely rewritten to support this new grammar. However, the rewritten code does not account for the function call without arguments, leading to a null pointer dereference.
 
-### Case Study 6: An undefined behavior (integer overflow) in MonetDB when calling SQL function levenshtein(). 
+### Case Study 5: An undefined behavior (integer overflow) in MonetDB when calling SQL function levenshtein(). 
 
 When passing two large strings to the function levenshtein(), a piece of code in MonetDB that calculated the array length triggers an integer overflow. If execution continued, this led to array out-of-bounds access and then the DBMS crashed.
 ```sql
@@ -134,7 +134,7 @@ sz = (n + 1) * (m + 1) * sizeof(int);    /* integer overflow */
 d = (int *) GDKmalloc(sz);
 ```
 
-### Case Study 7: An assertion failure in MariaDB when inserting data into tables with spatial index.
+### Case Study 6: An assertion failure in MariaDB when inserting data into tables with spatial index.
 
 When creating an InnoDB table with a SPATIAL index and inserting multiple rows of data, MariaDB will throw an assertion failure `!cursor->index->is_committed()' and raise SIGABRT.
 
@@ -149,7 +149,7 @@ INSERT INTO t1(f1) VALUES(0), (1), (2);
 
 ---
 
-Second, more case studies can be referred to links in the following table. Note that while we have detected numerous bugs in industrial databases (236 until submission, and 164 after submission), they keep their bug information private. Therefore, we are only able to present a selection of bugs from open-source databases that have publicly accessible information.
+Second, more case studies can be referred to links in the following table. Note that while we have detected numerous bugs in industrial databases (236 until submission, and 164 after submission), their vendors keep most of their bug information private. Therefore, we are only able to present a selection of bugs from these industrial databases that have publicly accessible information.
 
 | Database   | ID                                              | Bug Type               |
 |------------|-------------------------------------------------|------------------------|
