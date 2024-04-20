@@ -1,5 +1,3 @@
--- 这个既会崩client，又会崩server，详见右边
-
 create table t (d Int64, s AggregateFunction(groupUniqArrayArray, Array(UInt64)), c SimpleAggregateFunction(groupUniqArrayArray, Array(UInt64))) engine = SummingMergeTree() order by d;;
 WITH
 x AS (SELECT d-4000 d FROM t WHERE t.d >700),

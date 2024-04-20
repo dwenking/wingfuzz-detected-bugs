@@ -2,13 +2,6 @@ SET allow_experimental_object_type = 1;
 CREATE TABLE test(t UInt64, flag Object(Nullable('JSON')))
 ENGINE = MergeTree ORDER BY tuple();
 INSERT INTO test FORMAT JSONEachRow {"t": 1, "flag": {"k1": 1, "k2" : 2}} {"t": 2, "flag": {"k2": 3, "k3" : 4}};
-;
-;
-;
-;
-;
-;
-;
 select * from test as t1 join test as t2 on t1.t = t2.t join test as t3 on t2.t = t3.t ORDER BY t1.t FORMAT PrettyCompactNoEscapes;
 
 /*
