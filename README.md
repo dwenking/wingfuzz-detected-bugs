@@ -61,7 +61,7 @@ Furthermore, WingFuzz has been integrated into detecting more bugs across more d
 
 First, we select 10 bugs to illustrate the different root causes of our detected bugs.
 
-### Case Study: A segmentation violation in ClickHouse with user-defined functions. 
+### Case Study 1: A segmentation violation in ClickHouse with user-defined functions. 
 
 When using ClickHouse's UDF grammar to create two functions that call each other and then execute them, it will lead to a stack overflow in the database process and cause a segmentation violation, leading to denial of service.
 
@@ -74,7 +74,7 @@ SELECT x2(2);
 
 *The root cause of the bug.* ClickHouse's UDF does not identify the depth of recursion when the experimental analyzer is enabled. It is fixed in ClickHouse by adding checks to recursive function calls.
 
-### Case Study: A segmentation violation in DamengDB with CREATE VIEW. 
+### Case Study 2: A segmentation violation in DamengDB with CREATE VIEW. 
 
 When creating view v1 from a table, creating view v2 from v1 with the check option in DamengDB enabled, and inserting data into v2, the server crashes due to a segmentation violation, leading to denial of service.
 
@@ -87,7 +87,7 @@ INSERT INTO v2 VALUES (15);
 
 *The root cause of the bug.* DamengDB wrongly handled the insertion operations on the nested views. View v2 is read-only because it is constructed by another view. However, the DamengDB incorrectly identified the readability of this view and still attempted to insert data into it, which caused the segmentation fault.
 
-### Case Study: An use-after-free in MonetDB when truncating temporary tables.
+### Case Study 3: An use-after-free in MonetDB when truncating temporary tables.
 
 In MonetDB, when creating a temporary table within a transaction and truncating the temporary table, the MonetDB server will trigger an use-after-free when rollback or commit the transaction.
 
@@ -104,7 +104,7 @@ SELECT 1;
 
 *The root case of the bug.* When executing the test case, the statement `TRUNCATE TABLE t1` operated the truncation operation, which freed the resource of the temporary table. However, it forgot to set the flag representing the finished truncation. When committing or rollbacking the transaction, the temporary table was attempt to truncate again, which causing the already-freed resource being accessed again, leading to use-after-free.
 
-### Case Study: A null pointer dereference in MonetDB with CREATE MERGE TABLE. 
+### Case Study 4: A null pointer dereference in MonetDB with CREATE MERGE TABLE. 
 
 The merge table is a unique feature of MonetDB. It can merge the tables with the same column definitions into a single table. However, when recursively merging three tables and then inserting data, the MonetDB crashes due to a null pointer dereference.
 
@@ -119,7 +119,7 @@ CREATE MERGE TABLE a (b int, subtable2 varchar(32)) PARTITION BY VALUES ON (b)  
 
 *The root cause of the bug.* MonetDB did not correctly maintain the column names of the merged tables. When the tables were merged recursively, the string representing column names was wrongly set to a null pointer, which caused the NPD when inserting data.
 
-### Case Study: A null pointer dereference caused by empty arguments of MariaDB’s AES_ENCRYPT function. 
+### Case Study 5: A null pointer dereference caused by empty arguments of MariaDB’s AES_ENCRYPT function. 
 
 As the PoC below shows, a user can crash the whole MariaDB server by simply calling the AES_ENCRYPT function without any arguments, leading to a denial of service. The triggering of the crash does not rely on any table creation or data insertion.
 
@@ -129,7 +129,7 @@ SELECT AES_ENCRYPT ( );
 
 *The root cause of the bug.* The bug is introduced in MariaDB 11.2 when the grammar of optional arguments for the AES_ENCRYPT function is supported. The code for parsing the function AES_ENCRYPT is completely rewritten to support this new grammar. However, the rewritten code does not account for the function call without arguments, leading to a crash.
 
-### Case Study: An undefined behavior (integer overflow) in MonetDB when calling SQL function levenshtein(). 
+### Case Study 6: An undefined behavior (integer overflow) in MonetDB when calling SQL function levenshtein(). 
 
 When passing two large strings to the function levenshtein(), a piece of code in MonetDB that calculated the array length triggers an integer overflow. If execution continued, this led to array out-of-bounds access and then the DBMS crashed.
 ```sql
@@ -147,7 +147,7 @@ sz = (n + 1) * (m + 1) * sizeof(int);    /* integer overflow */
 d = (int *) GDKmalloc(sz);
 ```
 
-### Case Study: An assertion failure in MariaDB when inserting data into tables with spatial index.
+### Case Study 7: An assertion failure in MariaDB when inserting data into tables with spatial index.
 
 When creating a InnoDB table with SPATIAL index and inserting multiple rows of data, MariaDB will throw an assertion failure `!cursor->index->is_committed()' and raise SIGABRT.
 
@@ -160,7 +160,7 @@ INSERT INTO t1(f1) VALUES(0), (1), (2);
 ```
 *The root cause of the bug.* When a InnoDB table contains any index, the InnoDB engine will try bulk insertion when inserting multiple rows. The bulk insertion depends on the primary key which is automatically constructed by the index. However, the SPATIAL index is a special index which never construct the primary key. Thus, when the bulk insertion were looking for the primary key in the SPATIAL index, it triggered an assertion failure.
 
-### Case Study: An assertion failure in SQLite when using RETURNING *.
+### Case Study 8: An assertion failure in SQLite when using RETURNING *.
 The test case creates a table t1 in sqlite with data inserted, creates an empty temporary table t2, and inserts data of t1 into the temprary table t2. If the `RETURNING *` feature is enabled in the second insertion, the SQLite will trigger an assertion failure.
 
 ```sql
