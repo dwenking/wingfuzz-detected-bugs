@@ -151,35 +151,15 @@ INSERT INTO t1(f1) VALUES(0), (1), (2);
 
 Second, more case studies can be referred to links in the following table. Note that while we have detected 400 bugs (236 until submission, and 164 after submission) in industrial databases, and many of them keep their bug information private. Therefore, we are only able to present a selection of bugs from industry databases.
 
-| Database   | ID                                              | Bug Type               |
-|------------|-------------------------------------------------|------------------------|
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20978 | Denial of Service      |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20977 | Denial of Service      |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20976 | Denial of Service      |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20975 | Denial of Service      |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20974 | Denial of Service      |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20973 | Denial of Service      |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20972 | Denial of Service      |
-| MySQL      | https://www.cve.org/CVERecord?id=CVE-2024-20971 | Denial of Service      |
-| PostgreSQL | https://www.cve.org/CVERecord?id=CVE-2023-5868  | Memory Disclosure      |
-| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36371 | Segmentation Violation |
-| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36371 | Segmentation Violation |
-| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36370 | Segmentation Violation |
-| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36369 | Segmentation Violation |
-| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36368 | Segmentation Violation |
-| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36367 | Segmentation Violation |
-| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36366 | Segmentation Violation |
-| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36365 | Segmentation Violation |
-| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36364 | Segmentation Violation |
-| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36363 | Segmentation Violation |
-| MonetDB    | https://www.cve.org/CVERecord?id=CVE-2023-36362 | Segmentation Violation |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32091 | Use-After-Poison       |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32089 | Segmentation Violation |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32088 | Segmentation Violation |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32087 | Segmentation Violation |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32086 | Segmentation Violation |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32085 | Segmentation Violation |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32084 | Segmentation Violation |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32083 | Segmentation Violation |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32082 | Segmentation Violation |
-| MariaDB    | https://www.cve.org/CVERecord?id=CVE-2022-32081 | Segmentation Violation |
+| DBMS       | Case Study                                                                         |
+| ---------- | ---------------------------------------------------------------------------------- |
+| ClickHouse | [case-study/ClickHouse/case-study-01.sql](case-study/ClickHouse/case-study-01.sql) |
+| ClickHouse | [case-study/ClickHouse/case-study-02.sql](case-study/ClickHouse/case-study-02.sql) |
+| ClickHouse | [case-study/ClickHouse/case-study-03.sql](case-study/ClickHouse/case-study-03.sql) |
+| ClickHouse | [case-study/ClickHouse/case-study-04.sql](case-study/ClickHouse/case-study-04.sql) |
+| ClickHouse | [case-study/ClickHouse/case-study-05.sql](case-study/ClickHouse/case-study-05.sql) |
+| ClickHouse | [case-study/ClickHouse/case-study-06.sql](case-study/ClickHouse/case-study-06.sql) |
+| ClickHouse | [case-study/ClickHouse/case-study-07.sql](case-study/ClickHouse/case-study-07.sql) |
+| ClickHouse | [case-study/ClickHouse/case-study-08.sql](case-study/ClickHouse/case-study-08.sql) |
+| ClickHouse | [case-study/ClickHouse/case-study-09.sql](case-study/ClickHouse/case-study-09.sql) |
+| ClickHouse | [case-study/ClickHouse/case-study-10.sql](case-study/ClickHouse/case-study-10.sql) |
