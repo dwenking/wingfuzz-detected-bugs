@@ -151,8 +151,8 @@ INSERT INTO t1(f1) VALUES(0), (1), (2);
 
 Second, more case studies can be referred to links in the following table. Note that while we have detected 400 bugs (236 until submission, and 164 after submission) in industrial databases, and many of them keep their bug information private. Therefore, we are only able to present a selection of bugs from industry databases.
 
-| DBMS       | Case Study Link                                                                    |  | DBMS     | Case Study Link                                                                |  |
-| ---------- | ---------------------------------------------------------------------------------- |  | -------- | ------------------------------------------------------------------------------ |  |
+| DBMS       | Case Study Link                                                                    |  | DBMS     | Case Study Link                                                                |
+| ---------- | ---------------------------------------------------------------------------------- |--| -------- | ------------------------------------------------------------------------------ |
 | ClickHouse | [case-study/ClickHouse/case-study-01.sql](case-study/ClickHouse/case-study-01.sql) |  | MonetDB  | [case-study/MonetDB/case-study-01.sql](case-study/MonetDB/case-study-01.sql)   |
 | ClickHouse | [case-study/ClickHouse/case-study-02.sql](case-study/ClickHouse/case-study-02.sql) |  | MonetDB  | [case-study/MonetDB/case-study-02.sql](case-study/MonetDB/case-study-02.sql)   |
 | ClickHouse | [case-study/ClickHouse/case-study-03.sql](case-study/ClickHouse/case-study-03.sql) |  | MonetDB  | [case-study/MonetDB/case-study-03.sql](case-study/MonetDB/case-study-03.sql)   |
