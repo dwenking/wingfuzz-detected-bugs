@@ -1,0 +1,40 @@
+create table t1(c1 int auto_increment primary key NOT NULL);
+create trigger i1 after insert on t1 for each row insert into t1 values(NULL);
+insert into t1 values(NULL);
+
+/*
+#0 0x7f0c3760dbda (list_append+0x1a)
+#1 0x7f0c376669c6 (rel_insert+0x196)
+#2 0x7f0c3766abb3 (rel_updates+0x1ce3)
+#3 0x7f0c376c6c11 (sequential_block+0x121)
+#4 0x7f0c376c52dc (rel_psm+0x131c)
+#5 0x7f0c37653091 (rel_semantic+0x91)
+#6 0x7f0c37652e6a (rel_parse+0x19a)
+#7 0x7f0c37563102 (sql_insert_triggers+0x232)
+#8 0x7f0c3755bb5e (rel2bin_insert+0x148e)
+#9 0x7f0c37554539 (subrel_bin+0xd69)
+#10 0x7f0c3755f218 (exp_bin+0x29e8)
+#11 0x7f0c37558567 (subrel_bin+0x4d97)
+#12 0x7f0c37563162 (sql_insert_triggers+0x292)
+#13 0x7f0c3755bb5e (rel2bin_insert+0x148e)
+#14 0x7f0c37554539 (subrel_bin+0xd69)
+#15 0x7f0c3755f218 (exp_bin+0x29e8)
+#16 0x7f0c37558567 (subrel_bin+0x4d97)
+#17 0x7f0c37563162 (sql_insert_triggers+0x292)
+...
+#7407 0x7f0c37563162 (sql_insert_triggers+0x292)
+#7408 0x7f0c3755bb5e (rel2bin_insert+0x148e)
+#7409 0x7f0c37554539 (subrel_bin+0xd69)
+#7410 0x7f0c3755373b (output_rel_bin+0x6b)
+#7411 0x7f0c3757f9d9 (backend_dumpstmt+0x199)
+#7412 0x7f0c3754a367 (SQLparser+0x5d7)
+#7413 0x7f0c3754987b (SQLengine_+0x59b)
+#7414 0x7f0c37548343 (SQLengine+0x23)
+#7415 0x7f0c378d76cf (runScenario+0x4f)
+#7416 0x7f0c378d816c (MSscheduleClient+0x68c)
+#7417 0x7f0c3797fc2b (doChallenge+0xfb)
+#7418 0x7f0c37ffeba0 (THRstarter+0x100)
+#7419 0x7f0c3806ecc4 (thread_starter+0x34)
+#7420 0x7f0c373e3609 (start_thread+0xd9)
+#7421 0x7f0c37308133 (clone+0x43)
+*/
