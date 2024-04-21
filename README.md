@@ -149,7 +149,7 @@ INSERT INTO t1(f1) VALUES(0), (1), (2);
 
 ---
 
-Second, more case studies can be referred to links in the following table. Note that while we have detected 400 bugs (236 until submission, and 164 after submission) in industrial databases, and many of them keep their bug information private. Therefore, we are only able to present a selection of bugs from industry databases.
+Secondly, additional case studies can be found in the links provided in the table below. Although we have identified 400 bugs (236 prior to submission and 164 post-submission) in industrial databases, a significant number of these bugs remain undisclosed due to security considerations. As a result, we  showcast  a  selection of bugs with publicly available information.
 
 | DBMS       | Case Study Link                                                                    |          | DBMS     | Case Study Link                                                                |
 | ---------- | ---------------------------------------------------------------------------------- | -------- | -------- | ------------------------------------------------------------------------------ |
