@@ -151,35 +151,37 @@ INSERT INTO t1(f1) VALUES(0), (1), (2);
 
 Second, more case studies can be referred to links in the following table. Note that while we have detected 400 bugs (236 until submission, and 164 after submission) in industrial databases, and many of them keep their bug information private. Therefore, we are only able to present a selection of bugs from industry databases.
 
-| DBMS       | Case Study Link                                                                    |  | DBMS     | Case Study Link                                                                |
-| ---------- | ---------------------------------------------------------------------------------- |--| -------- | ------------------------------------------------------------------------------ |
-| ClickHouse | [case-study/ClickHouse/case-study-01.sql](case-study/ClickHouse/case-study-01.sql) |  | MonetDB  | [case-study/MonetDB/case-study-01.sql](case-study/MonetDB/case-study-01.sql)   |
-| ClickHouse | [case-study/ClickHouse/case-study-02.sql](case-study/ClickHouse/case-study-02.sql) |  | MonetDB  | [case-study/MonetDB/case-study-02.sql](case-study/MonetDB/case-study-02.sql)   |
-| ClickHouse | [case-study/ClickHouse/case-study-03.sql](case-study/ClickHouse/case-study-03.sql) |  | MonetDB  | [case-study/MonetDB/case-study-03.sql](case-study/MonetDB/case-study-03.sql)   |
-| ClickHouse | [case-study/ClickHouse/case-study-04.sql](case-study/ClickHouse/case-study-04.sql) |  | MonetDB  | [case-study/MonetDB/case-study-04.sql](case-study/MonetDB/case-study-04.sql)   |
-| ClickHouse | [case-study/ClickHouse/case-study-05.sql](case-study/ClickHouse/case-study-05.sql) |  | MonetDB  | [case-study/MonetDB/case-study-05.sql](case-study/MonetDB/case-study-05.sql)   |
-| ClickHouse | [case-study/ClickHouse/case-study-06.sql](case-study/ClickHouse/case-study-06.sql) |  | MonetDB  | [case-study/MonetDB/case-study-06.sql](case-study/MonetDB/case-study-06.sql)   |
-| ClickHouse | [case-study/ClickHouse/case-study-07.sql](case-study/ClickHouse/case-study-07.sql) |  | MonetDB  | [case-study/MonetDB/case-study-07.sql](case-study/MonetDB/case-study-07.sql)   |
-| ClickHouse | [case-study/ClickHouse/case-study-08.sql](case-study/ClickHouse/case-study-08.sql) |  | MonetDB  | [case-study/MonetDB/case-study-08.sql](case-study/MonetDB/case-study-08.sql)   |
-| ClickHouse | [case-study/ClickHouse/case-study-09.sql](case-study/ClickHouse/case-study-09.sql) |  | MonetDB  | [case-study/MonetDB/case-study-09.sql](case-study/MonetDB/case-study-09.sql)   |
-| ClickHouse | [case-study/ClickHouse/case-study-10.sql](case-study/ClickHouse/case-study-10.sql) |  | MonetDB  | [case-study/MonetDB/case-study-10.sql](case-study/MonetDB/case-study-10.sql)   |
-| DamengDB   | [case-study/DamengDB/case-study-01.sql](case-study/DamengDB/case-study-01.sql)     |  | MySQL    | [case-study/MySQL/case-study-01.sql](case-study/MySQL/case-study-01.sql)       |
-| DamengDB   | [case-study/DamengDB/case-study-02.sql](case-study/DamengDB/case-study-02.sql)     |  | MySQL    | [case-study/MySQL/case-study-02.sql](case-study/MySQL/case-study-02.sql)       |
-| DamengDB   | [case-study/DamengDB/case-study-03.sql](case-study/DamengDB/case-study-03.sql)     |  | MySQL    | [case-study/MySQL/case-study-03.sql](case-study/MySQL/case-study-03.sql)       |
-| DamengDB   | [case-study/DamengDB/case-study-04.sql](case-study/DamengDB/case-study-04.sql)     |  | MySQL    | [case-study/MySQL/case-study-04.sql](case-study/MySQL/case-study-04.sql)       |
-| DamengDB   | [case-study/DamengDB/case-study-05.sql](case-study/DamengDB/case-study-05.sql)     |  | MySQL    | [case-study/MySQL/case-study-05.sql](case-study/MySQL/case-study-05.sql)       |
-| DamengDB   | [case-study/DamengDB/case-study-06.sql](case-study/DamengDB/case-study-06.sql)     |  | MySQL    | [case-study/MySQL/case-study-06.sql](case-study/MySQL/case-study-06.sql)       |
-| DamengDB   | [case-study/DamengDB/case-study-07.sql](case-study/DamengDB/case-study-07.sql)     |  | MySQL    | [case-study/MySQL/case-study-07.sql](case-study/MySQL/case-study-07.sql)       |
-| DamengDB   | [case-study/DamengDB/case-study-08.sql](case-study/DamengDB/case-study-08.sql)     |  | MySQL    | [case-study/MySQL/case-study-08.sql](case-study/MySQL/case-study-08.sql)       |
-| DamengDB   | [case-study/DamengDB/case-study-09.sql](case-study/DamengDB/case-study-09.sql)     |  | MySQL    | [case-study/MySQL/case-study-09.sql](case-study/MySQL/case-study-09.sql)       |
-| DamengDB   | [case-study/DamengDB/case-study-10.sql](case-study/DamengDB/case-study-10.sql)     |  | MySQL    | [case-study/MySQL/case-study-10.sql](case-study/MySQL/case-study-10.sql)       |
-| MariaDB    | [case-study/MariaDB/case-study-01.sql](case-study/MariaDB/case-study-01.sql)       |  | TDEngine | [case-study/TDEngine/case-study-01.sql](case-study/TDEngine/case-study-01.sql) |
-| MariaDB    | [case-study/MariaDB/case-study-02.sql](case-study/MariaDB/case-study-02.sql)       |  | TDEngine | [case-study/TDEngine/case-study-02.sql](case-study/TDEngine/case-study-02.sql) |
-| MariaDB    | [case-study/MariaDB/case-study-03.sql](case-study/MariaDB/case-study-03.sql)       |  | TDEngine | [case-study/TDEngine/case-study-03.sql](case-study/TDEngine/case-study-03.sql) |
-| MariaDB    | [case-study/MariaDB/case-study-04.sql](case-study/MariaDB/case-study-04.sql)       |  | TDEngine | [case-study/TDEngine/case-study-04.sql](case-study/TDEngine/case-study-04.sql) |
-| MariaDB    | [case-study/MariaDB/case-study-05.sql](case-study/MariaDB/case-study-05.sql)       |  | TDEngine | [case-study/TDEngine/case-study-05.sql](case-study/TDEngine/case-study-05.sql) |
-| MariaDB    | [case-study/MariaDB/case-study-06.sql](case-study/MariaDB/case-study-06.sql)       |  | TDEngine | [case-study/TDEngine/case-study-06.sql](case-study/TDEngine/case-study-06.sql) |
-| MariaDB    | [case-study/MariaDB/case-study-07.sql](case-study/MariaDB/case-study-07.sql)       |  | TDEngine | [case-study/TDEngine/case-study-07.sql](case-study/TDEngine/case-study-07.sql) |
-| MariaDB    | [case-study/MariaDB/case-study-08.sql](case-study/MariaDB/case-study-08.sql)       |  | TDEngine | [case-study/TDEngine/case-study-08.sql](case-study/TDEngine/case-study-08.sql) |
-| MariaDB    | [case-study/MariaDB/case-study-09.sql](case-study/MariaDB/case-study-09.sql)       |  | TDEngine | [case-study/TDEngine/case-study-09.sql](case-study/TDEngine/case-study-09.sql) |
-| MariaDB    | [case-study/MariaDB/case-study-10.sql](case-study/MariaDB/case-study-10.sql)       |  | TDEngine | [case-study/TDEngine/case-study-10.sql](case-study/TDEngine/case-study-10.sql) |
+| DBMS       | Case Study Link                                                                    |          | DBMS     | Case Study Link                                                                |
+| ---------- | ---------------------------------------------------------------------------------- | -------- | -------- | ------------------------------------------------------------------------------ |
+| ClickHouse | [case-study/ClickHouse/case-study-01.sql](case-study/ClickHouse/case-study-01.sql) |          | MonetDB  | [case-study/MonetDB/case-study-01.sql](case-study/MonetDB/case-study-01.sql)   |
+| ClickHouse | [case-study/ClickHouse/case-study-02.sql](case-study/ClickHouse/case-study-02.sql) |          | MonetDB  | [case-study/MonetDB/case-study-02.sql](case-study/MonetDB/case-study-02.sql)   |
+| ClickHouse | [case-study/ClickHouse/case-study-03.sql](case-study/ClickHouse/case-study-03.sql) |          | MonetDB  | [case-study/MonetDB/case-study-03.sql](case-study/MonetDB/case-study-03.sql)   |
+| ClickHouse | [case-study/ClickHouse/case-study-04.sql](case-study/ClickHouse/case-study-04.sql) |          | MonetDB  | [case-study/MonetDB/case-study-04.sql](case-study/MonetDB/case-study-04.sql)   |
+| ClickHouse | [case-study/ClickHouse/case-study-05.sql](case-study/ClickHouse/case-study-05.sql) |          | MonetDB  | [case-study/MonetDB/case-study-05.sql](case-study/MonetDB/case-study-05.sql)   |
+| ClickHouse | [case-study/ClickHouse/case-study-06.sql](case-study/ClickHouse/case-study-06.sql) |          | MonetDB  | [case-study/MonetDB/case-study-06.sql](case-study/MonetDB/case-study-06.sql)   |
+| ClickHouse | [case-study/ClickHouse/case-study-07.sql](case-study/ClickHouse/case-study-07.sql) |          | MonetDB  | [case-study/MonetDB/case-study-07.sql](case-study/MonetDB/case-study-07.sql)   |
+| ClickHouse | [case-study/ClickHouse/case-study-08.sql](case-study/ClickHouse/case-study-08.sql) |          | MonetDB  | [case-study/MonetDB/case-study-08.sql](case-study/MonetDB/case-study-08.sql)   |
+| ClickHouse | [case-study/ClickHouse/case-study-09.sql](case-study/ClickHouse/case-study-09.sql) |          | MonetDB  | [case-study/MonetDB/case-study-09.sql](case-study/MonetDB/case-study-09.sql)   |
+| ClickHouse | [case-study/ClickHouse/case-study-10.sql](case-study/ClickHouse/case-study-10.sql) |          | MonetDB  | [case-study/MonetDB/case-study-10.sql](case-study/MonetDB/case-study-10.sql)   |
+| DamengDB   | [case-study/DamengDB/case-study-01.sql](case-study/DamengDB/case-study-01.sql)     |          | MySQL    | [case-study/MySQL/case-study-01.sql](case-study/MySQL/case-study-01.sql)       |
+| DamengDB   | [case-study/DamengDB/case-study-02.sql](case-study/DamengDB/case-study-02.sql)     |          | MySQL    | [case-study/MySQL/case-study-02.sql](case-study/MySQL/case-study-02.sql)       |
+| DamengDB   | [case-study/DamengDB/case-study-03.sql](case-study/DamengDB/case-study-03.sql)     |          | MySQL    | [case-study/MySQL/case-study-03.sql](case-study/MySQL/case-study-03.sql)       |
+| DamengDB   | [case-study/DamengDB/case-study-04.sql](case-study/DamengDB/case-study-04.sql)     |          | MySQL    | [case-study/MySQL/case-study-04.sql](case-study/MySQL/case-study-04.sql)       |
+| DamengDB   | [case-study/DamengDB/case-study-05.sql](case-study/DamengDB/case-study-05.sql)     |          | MySQL    | [case-study/MySQL/case-study-05.sql](case-study/MySQL/case-study-05.sql)       |
+| DamengDB   | [case-study/DamengDB/case-study-06.sql](case-study/DamengDB/case-study-06.sql)     |          | MySQL    | [case-study/MySQL/case-study-06.sql](case-study/MySQL/case-study-06.sql)       |
+| DamengDB   | [case-study/DamengDB/case-study-07.sql](case-study/DamengDB/case-study-07.sql)     |          | MySQL    | [case-study/MySQL/case-study-07.sql](case-study/MySQL/case-study-07.sql)       |
+| DamengDB   | [case-study/DamengDB/case-study-08.sql](case-study/DamengDB/case-study-08.sql)     |          | MySQL    | [case-study/MySQL/case-study-08.sql](case-study/MySQL/case-study-08.sql)       |
+| DamengDB   | [case-study/DamengDB/case-study-09.sql](case-study/DamengDB/case-study-09.sql)     |          | MySQL    | [case-study/MySQL/case-study-09.sql](case-study/MySQL/case-study-09.sql)       |
+| DamengDB   | [case-study/DamengDB/case-study-10.sql](case-study/DamengDB/case-study-10.sql)     |          | MySQL    | [case-study/MySQL/case-study-10.sql](case-study/MySQL/case-study-10.sql)       |
+| MariaDB    | [case-study/MariaDB/case-study-01.sql](case-study/MariaDB/case-study-01.sql)       |          | TDEngine | [case-study/TDEngine/case-study-01.sql](case-study/TDEngine/case-study-01.sql) |
+| MariaDB    | [case-study/MariaDB/case-study-02.sql](case-study/MariaDB/case-study-02.sql)       |          | TDEngine | [case-study/TDEngine/case-study-02.sql](case-study/TDEngine/case-study-02.sql) |
+| MariaDB    | [case-study/MariaDB/case-study-03.sql](case-study/MariaDB/case-study-03.sql)       |          | TDEngine | [case-study/TDEngine/case-study-03.sql](case-study/TDEngine/case-study-03.sql) |
+| MariaDB    | [case-study/MariaDB/case-study-04.sql](case-study/MariaDB/case-study-04.sql)       |          | TDEngine | [case-study/TDEngine/case-study-04.sql](case-study/TDEngine/case-study-04.sql) |
+| MariaDB    | [case-study/MariaDB/case-study-05.sql](case-study/MariaDB/case-study-05.sql)       |          | TDEngine | [case-study/TDEngine/case-study-05.sql](case-study/TDEngine/case-study-05.sql) |
+| MariaDB    | [case-study/MariaDB/case-study-06.sql](case-study/MariaDB/case-study-06.sql)       |          | TDEngine | [case-study/TDEngine/case-study-06.sql](case-study/TDEngine/case-study-06.sql) |
+| MariaDB    | [case-study/MariaDB/case-study-07.sql](case-study/MariaDB/case-study-07.sql)       |          | TDEngine | [case-study/TDEngine/case-study-07.sql](case-study/TDEngine/case-study-07.sql) |
+| MariaDB    | [case-study/MariaDB/case-study-08.sql](case-study/MariaDB/case-study-08.sql)       |          | TDEngine | [case-study/TDEngine/case-study-08.sql](case-study/TDEngine/case-study-08.sql) |
+| MariaDB    | [case-study/MariaDB/case-study-09.sql](case-study/MariaDB/case-study-09.sql)       |          | TDEngine | [case-study/TDEngine/case-study-09.sql](case-study/TDEngine/case-study-09.sql) |
+| MariaDB    | [case-study/MariaDB/case-study-10.sql](case-study/MariaDB/case-study-10.sql)       |          | TDEngine | [case-study/TDEngine/case-study-10.sql](case-study/TDEngine/case-study-10.sql) |
+
+
